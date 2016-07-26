@@ -1,12 +1,12 @@
-package fs;
+package ft;
 
 import java.io.File;
 import java.nio.file.Files;
 
-import io.fluo.api.client.FluoClient;
-import io.fluo.api.client.FluoFactory;
-import io.fluo.api.config.FluoConfiguration;
-import io.fluo.api.mini.MiniFluo;
+import org.apache.fluo.api.client.FluoClient;
+import org.apache.fluo.api.client.FluoFactory;
+import org.apache.fluo.api.config.FluoConfiguration;
+import org.apache.fluo.api.mini.MiniFluo;
 
 public class Main {
   public static void main(String[] args) throws Exception {
@@ -24,6 +24,6 @@ public class Main {
   }
 
   private static void experiment(MiniFluo mini, FluoClient client) {
-
+    //experiment with Fluo here
   }
 }
