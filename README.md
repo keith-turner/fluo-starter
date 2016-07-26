@@ -8,7 +8,7 @@ of the correct dependencies on the classpath and execute Main.
 
 
 ```bash
-mvn clean compile exec:java
+mvn -q clean compile exec:java
 ```
 
 The command takes a bit to run because it starts a MiniAccumulo and MiniFluo

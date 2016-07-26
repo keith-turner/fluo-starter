@@ -3,27 +3,35 @@ package ft;
 import java.io.File;
 import java.nio.file.Files;
 
-import org.apache.fluo.api.client.FluoClient;
-import org.apache.fluo.api.client.FluoFactory;
-import org.apache.fluo.api.config.FluoConfiguration;
+// Normaly using * with imports is a bad practice, however in this case it makes experimenting with
+// Fluo easier.
+import org.apache.fluo.api.client.*;
+import org.apache.fluo.api.config.*;
+import org.apache.fluo.api.data.*;
 import org.apache.fluo.api.mini.MiniFluo;
 
 public class Main {
   public static void main(String[] args) throws Exception {
 
     String tmpDir = Files.createTempDirectory(new File("target").toPath(), "mini").toString();
-    //System.out.println("tmp dir : "+tmpDir);
+    // System.out.println("tmp dir : "+tmpDir);
 
     FluoConfiguration fluoConfig = new FluoConfiguration();
     fluoConfig.setApplicationName("class");
     fluoConfig.setMiniDataDir(tmpDir);
 
-    try(MiniFluo mini = FluoFactory.newMiniFluo(fluoConfig); FluoClient client = FluoFactory.newClient(mini.getClientConfiguration())){
-      experiment(mini, client);
+    System.out.print("Starting MiniFluo ... ");
+
+    try (MiniFluo mini = FluoFactory.newMiniFluo(fluoConfig);
+        FluoClient client = FluoFactory.newClient(mini.getClientConfiguration())) {
+
+      System.out.println("started.");
+
+      excercise(mini, client);
     }
   }
 
-  private static void experiment(MiniFluo mini, FluoClient client) {
-    //experiment with Fluo here
+  private static void excercise(MiniFluo mini, FluoClient client) {
+
   }
 }
