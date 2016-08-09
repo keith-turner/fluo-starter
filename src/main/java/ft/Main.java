@@ -32,6 +32,6 @@ public class Main {
   }
 
   private static void excercise(MiniFluo mini, FluoClient client) {
-
+    //TODO Do all Fluo Tour excercises
   }
 }
