@@ -9,6 +9,7 @@ import org.apache.fluo.api.client.*;
 import org.apache.fluo.api.config.*;
 import org.apache.fluo.api.data.*;
 import org.apache.fluo.api.mini.MiniFluo;
+import org.apache.fluo.api.observer.*;
 
 public class Main {
   public static void main(String[] args) throws Exception {
