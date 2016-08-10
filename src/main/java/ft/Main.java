@@ -20,6 +20,8 @@ public class Main {
     fluoConfig.setApplicationName("class");
     fluoConfig.setMiniDataDir(tmpDir);
 
+    preInit(fluoConfig);
+
     System.out.print("Starting MiniFluo ... ");
 
     try (MiniFluo mini = FluoFactory.newMiniFluo(fluoConfig);
@@ -29,6 +31,10 @@ public class Main {
 
       excercise(mini, client);
     }
+  }
+
+  private static void preInit(FluoConfiguration fluoConfig) {
+    //this method does not need to be changed for earlier excercises in tour
   }
 
   private static void excercise(MiniFluo mini, FluoClient client) {
