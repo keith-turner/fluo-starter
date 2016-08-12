@@ -25,19 +25,19 @@ public class TweetLoader implements Loader {
   public void load(TransactionBase tx, Context context) throws Exception {
 
     Set<Edge> tweetEdges = new HashSet<>();
-    
+
     for (String hashtag : tweet.hashtags) {
       tweetEdges.add(new Edge(EdgeType.HASHTAG, tweet.from, hashtag));
     }
 
     for (String mention : tweet.mentions) {
-      if(!tweet.from.equals(mention)) {
+      if (!tweet.from.equals(mention)) {
         tweetEdges.add(new Edge(EdgeType.USER, mention, tweet.from));
       }
     }
 
     Graph graph = new Graph(tx);
-    
+
     Map<Edge, EdgeState> existing = graph.getExistingEdges(tweetEdges);
     Set<Edge> edgesToAdd = Sets.difference(tweetEdges, existing.keySet());
     graph.addNewEdges(edgesToAdd);

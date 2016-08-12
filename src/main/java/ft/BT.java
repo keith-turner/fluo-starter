@@ -9,14 +9,14 @@ import org.apache.fluo.api.data.Bytes.BytesBuilder;
 public class BT {
   public static void main(String[] args) {
     BytesBuilder bb = Bytes.newBuilder();
-    
+
     bb.append("kerbalnaut:");
     int prefixLen = bb.getLength();
 
     HashSet<Bytes> hashset = new HashSet<>();
     TreeSet<Bytes> treeset = new TreeSet<>();
 
-    for(int i = 1; i <= 20; i++) {
+    for (int i = 1; i <= 20; i++) {
       bb.setLength(prefixLen);
       bb.append(String.format("%04d", i));
       Bytes bytes = bb.toBytes();
