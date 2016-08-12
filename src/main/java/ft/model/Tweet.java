@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+/**
+ * A simple class that holds pertitnent data for a tweet.
+ */
 public class Tweet {
   public final String from;
   public final List<String> hashtags;

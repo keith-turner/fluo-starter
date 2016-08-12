@@ -101,7 +101,6 @@ public class Graph {
       if(edge.getType() == EdgeType.HASHTAG) {
         String reverseRow = toReverseRow(edge);
         tx.set(reverseRow, EDGE_STATE_COL, EdgeState.NEW.name());
-        tx.set(reverseRow, EDGE_ADDTIME_COL, addTime);
       }
       
       String row = toRow(edge);

@@ -29,8 +29,8 @@ public class Tag {
   //following variable store the state of tag as read from a transaction
   private ArrayList<RowColumnValue> linkedUserUpdates;
   private ArrayList<RowColumnValue> degreeUpdates;
-  int degree;
-  int linkedUsers;
+  Integer degree;
+  Integer linkedUsers;
   
   private void readState(){
     //all of tags data is stored in one row, whenever trying to read any of it... read all of it.
@@ -98,7 +98,7 @@ public class Tag {
     return degreeUpdates.size();
   }
 
-  public int getDegree(){
+  public Integer getDegree(){
     readState();
     return degree;
   }
@@ -107,7 +107,7 @@ public class Tag {
     tx.set(row, DEGREE_COL, degree+"");
   }
   
-  public int getLinkedUsers(){
+  public Integer getLinkedUsers(){
     readState();
     return linkedUsers;
   }

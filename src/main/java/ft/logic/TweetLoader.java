@@ -31,7 +31,9 @@ public class TweetLoader implements Loader {
     }
 
     for (String mention : tweet.mentions) {
-      tweetEdges.add(new Edge(EdgeType.USER, mention, tweet.from));
+      if(!tweet.from.equals(mention)) {
+        tweetEdges.add(new Edge(EdgeType.USER, mention, tweet.from));
+      }
     }
 
     Graph graph = new Graph(tx);

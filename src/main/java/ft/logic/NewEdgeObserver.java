@@ -16,7 +16,7 @@ import org.apache.fluo.api.data.Bytes;
 import org.apache.fluo.api.data.Column;
 import org.apache.fluo.api.observer.AbstractObserver;
 
-public abstract class NewEdgeObserver extends AbstractObserver {
+public class NewEdgeObserver extends AbstractObserver {
 
   public void processNewHashtagEdge(TransactionBase tx, Edge edge) {
     
@@ -27,6 +27,10 @@ public abstract class NewEdgeObserver extends AbstractObserver {
     
     Set<String> otherUsers = graph.getNeighbors(EdgeType.HASHTAG, tagName, EdgeState.PROCESSED);
     
+    if(otherUsers.contains(user)) {
+      //this edge is already processed
+      return;
+    }
     
     HashSet<Edge> edges = new HashSet<>();
     for (String otherUser : otherUsers) {
@@ -95,6 +99,4 @@ public abstract class NewEdgeObserver extends AbstractObserver {
   public ObservedColumn getObservedColumn() {
     return new ObservedColumn(Graph.EDGE_ADDTIME_COL, NotificationType.STRONG);
   }
-
- 
 }
