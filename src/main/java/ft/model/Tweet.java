@@ -1,4 +1,4 @@
-package ft;
+package ft.model;
 
 import java.util.Arrays;
 import java.util.Collections;

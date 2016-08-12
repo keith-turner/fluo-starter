@@ -11,9 +11,13 @@ import org.apache.fluo.api.config.*;
 import org.apache.fluo.api.data.*;
 import org.apache.fluo.api.mini.MiniFluo;
 import org.apache.fluo.api.observer.*;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
+import ft.logic.HashTagEdgeObserver;
+import ft.logic.NewEdgeObserver;
+import ft.logic.TagObserver;
+import ft.logic.TweetLoader;
+import ft.logic.UserEdgeObserver;
+import ft.model.Tweet;
 
 public class Main {
   public static void main(String[] args) throws Exception {
@@ -55,100 +59,9 @@ public class Main {
   public static final String USER_EDGE = "user";
   
 
-  public static class HashTagEdgeObserver extends NewEdgeObserver {
-
-    public HashTagEdgeObserver() {
-      super(HASHTAG_EDGE);
-    }
-
-    @Override
-    public void processNewEdge(TransactionBase tx, Edge edge) {
-      
-      String tag = edge.getNode1();
-      String user = edge.getNode2();
-      
-      Graph graph = new Graph(tx);
-      
-      Set<String> otherUsers = graph.getNeighbors(HASHTAG_EDGE, tag);
-      
-      
-      HashSet<Edge> edges = new HashSet<>();
-      for (String otherUser : otherUsers) {
-        edges.add(new Edge(USER_EDGE, user, otherUser));
-      }
-      
-      Set<Edge> newUserEdges = graph.getProcessedEdges(edges);
-      for(Edge newUserEdge : newUserEdges) {
-        TagPersistence.newUserEdge(tag, newUserEdge);
-      }
-      
-      TagPersistence.incrementDegree(tag);
-      graph.lockNode(user);
-    }
-
-
-
-  }
-
-  public static class UserEdgeObserver extends NewEdgeObserver {
-
-    public UserEdgeObserver() {
-      super(USER_EDGE);
-    }
-
-    @Override
-    public void processNewEdge(TransactionBase tx, Edge edge) {
-      
-      Graph graph = new Graph(tx);
-      
-      Set<String> tags1 = graph.getNeighbors(HASHTAG_EDGE, edge.getNode1());
-      Set<String> tags2 = graph.getNeighbors(HASHTAG_EDGE, edge.getNode2());
-      
-      Set<String> tagsToIncrement = Sets.intersection(tags1, tags2);
-      
-      for (String tag : tagsToIncrement) {
-        TagPersistence.newUserEdge(tag, edge);
-      }
-      
-      graph.lockNode(edge.getNode1());
-      graph.lockNode(edge.getNode2());
-    }
-
-  }
-
-  public static class TweetLoader implements Loader {
-
-    private Tweet tweet;
-
-    public TweetLoader(Tweet tweet) {
-      this.tweet = tweet;
-    }
-
-    @Override
-    public void load(TransactionBase tx, Context context) throws Exception {
-   
-      Set<Edge> tweetEdges = new HashSet<>();
-      
-      for (String hashtag : tweet.hashtags) {
-        tweetEdges.add(new Edge(HASHTAG_EDGE, tweet.from, hashtag));
-      }
-
-      for (String mention : tweet.mentions) {
-        tweetEdges.add(new Edge(USER_EDGE, mention, tweet.from));
-      }
-
-      Graph graph = new Graph(tx);
-      
-      Set<Edge> existing = graph.getExistingEdges(tweetEdges);
-      Set<Edge> edgesToAdd = Sets.difference(tweetEdges, existing);
-      
-      graph.addEdges(tweetEdges);
-    }
-  }
-
   private static void preInit(FluoConfiguration fluoConfig) {
-    fluoConfig.addObserver(new ObserverConfiguration(HashTagEdgeObserver.class.getName()));
-    fluoConfig.addObserver(new ObserverConfiguration(UserEdgeObserver.class.getName()));
+    fluoConfig.addObserver(new ObserverConfiguration(NewEdgeObserver.class.getName()));
+    fluoConfig.addObserver(new ObserverConfiguration(TagObserver.class.getName()));
   }
 
   private static void excercise(MiniFluo mini, FluoClient client) {
