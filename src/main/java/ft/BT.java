@@ -8,7 +8,7 @@ import org.apache.fluo.api.data.Bytes.BytesBuilder;
 
 public class BT {
   public static void main(String[] args) {
-    BytesBuilder bb = Bytes.newBuilder();
+    BytesBuilder bb = Bytes.builder();
 
     bb.append("kerbalnaut:");
     int prefixLen = bb.getLength();
