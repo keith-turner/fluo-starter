@@ -13,8 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <accumulo.version>1.7.2</accumulo.version>
-    <fluo.version>1.0.0-incubating-SNAPSHOT</fluo.version>
-    <fluo-recipes.version>1.0.0-incubating-SNAPSHOT</fluo-recipes.version>
+    <fluo.version>1.0.0-incubating</fluo.version>
   </properties>
 
   <build>
@@ -84,31 +83,6 @@
       <artifactId>fluo-mini</artifactId>
       <version>${fluo.version}</version>
       <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fluo</groupId>
-      <artifactId>fluo-recipes-core</artifactId>
-      <version>${fluo-recipes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fluo</groupId>
-      <artifactId>fluo-recipes-kryo</artifactId>
-      <version>${fluo-recipes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fluo</groupId>
-      <artifactId>fluo-recipes-accumulo</artifactId>
-      <version>${fluo-recipes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fluo</groupId>
-      <artifactId>fluo-recipes-spark</artifactId>
-      <version>${fluo-recipes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fluo</groupId>
-      <artifactId>fluo-recipes-test</artifactId>
-      <version>${fluo-recipes.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
